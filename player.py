@@ -1,4 +1,5 @@
 from memory_reader import MemoryReader
+from input_simulator import InputSimulator
 import struct
 
 
@@ -6,6 +7,8 @@ import struct
 class Player(MemoryReader):
     def __init__(self):
         super().__init__()
+        self.input_simulator = InputSimulator()
+
         self.name = None
         self.coord = None   
         self.offsets = {
@@ -24,10 +27,30 @@ class Player(MemoryReader):
             self.name = string_value
     
     def get_player_coord(self):
-        print("get_player_coord")
         player_coord_x = struct.unpack('f', self.pm.read_bytes(self.fmod_base + self.offsets["player_coord_x"], 4))[0]
         player_coord_y = struct.unpack('f', self.pm.read_bytes(self.fmod_base + self.offsets["player_coord_y"], 4))[0]
         player_coord_z = struct.unpack('f', self.pm.read_bytes(self.fmod_base + self.offsets["player_coord_z"], 4))[0]
         self.coord = (player_coord_x, player_coord_y, player_coord_z)
+
+    def move_forward(self):
+        self.input_simulator.move_forward()
+
+    def move_backward(self):
+        self.input_simulator.move_backward()
+    
+    def stop_move(self):
+        self.input_simulator.stop_move()
+
+    def turn_left(self):
+        self.input_simulator.turn_left()
+
+    def turn_right(self):
+        self.input_simulator.turn_right()
+
+    def stop_turn(self):
+        self.input_simulator.stop_turn()
+
+
+
 
 

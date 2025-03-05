@@ -15,3 +15,8 @@ class MemoryReader:
                 return module.lpBaseOfDll
     
 
+if __name__ == "__main__":
+    memory_reader = MemoryReader()
+    print(memory_reader.base_address)
+    print(memory_reader.fmod_base)
+
