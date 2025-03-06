@@ -14,6 +14,12 @@ class MemoryReader:
             if module_name.lower() in module.name.lower():
                 return module.lpBaseOfDll
     
+    def get_pointer_address(self, base_address, offsets):
+        address = base_address
+        for offset in offsets:
+            address = self.pm.read_int(address) + offset
+        return address
+    
 
 if __name__ == "__main__":
     memory_reader = MemoryReader()
